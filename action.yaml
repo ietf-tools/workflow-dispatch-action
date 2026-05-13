@@ -1,4 +1,4 @@
-name: 'Workflow Dispatch'
+name: 'Workflow Run Dispatch'
 description: 'Trigger a GitHub Actions workflow run in a different repo and wait for its completion'
 author: IETF Tools Team
 inputs:

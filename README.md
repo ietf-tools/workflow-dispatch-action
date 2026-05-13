@@ -5,7 +5,7 @@
 [![Release](https://img.shields.io/github/release/ietf-tools/workflow-dispatch-action.svg?style=flat&maxAge=600)](https://github.com/ietf-tools/workflow-dispatch-action/releases)
 [![License](https://img.shields.io/github/license/ietf-tools/workflow-dispatch-action)](https://github.com/ietf-tools/workflow-dispatch-action/blob/main/LICENSE)
 
-##### Workflow Dispatch - Github Action
+##### Workflow Run Dispatch - Github Action
 
 </div>
 
