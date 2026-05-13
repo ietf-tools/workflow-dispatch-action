@@ -1,0 +1,50 @@
+name: 'Workflow Dispatch'
+description: 'Trigger a GitHub Actions workflow in a different repos and wait for completion'
+author: IETF Tools Team
+inputs:
+  repo:
+    description: 'Repo owner and name (e.g. org/repo)'
+    required: true
+  workflow:
+    description: 'Name or ID of workflow to run (e.g. deploy.yml)'
+    required: true
+  ref:
+    description: 'Branch, tag or commit SHA reference of the workflow run (e.g. main)'
+    required: false
+    default: 'main'
+  token:
+    description: 'GitHub token with write access to the target repo (MUST be a PAT, NOT the GITHUB_TOKEN)'
+    required: true
+  inputs:
+    description: 'Inputs to pass to the workflow as a JSON string. All values MUST be strings.'
+    required: false
+    default: '{}'
+  showRunUrl:
+    description: 'Display the URL of the triggered workflow in the logs'
+    required: false
+    default: 'true'
+  waitForCompletion:
+    description: 'Await completion of the triggered worflow'
+    required: false
+    default: 'true'
+  waitForCompletionInterval:
+    description: 'How often to query the triggered worflow status (e.g. 30s or 1m)'
+    required: false
+    default: '30s'
+  waitForCompletionTimeout:
+    description: 'How long to wait before marking the workflow as timed out (e.g. 10m or 1h)'
+    required: false
+    default: '10m'
+outputs:
+  workflowRunResult:
+    description: 'Result state of the triggered workflow (see readme for possible values)'
+  workflowRunId:
+    description: 'ID of the triggered workflow run'
+  workflowRunUrl:
+    description: 'URL of the triggered workflow run'
+runs:
+  using: 'node24'
+  main: 'dist/index.js'
+branding:
+  icon: send
+  color: red

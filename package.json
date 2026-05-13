@@ -1,0 +1,30 @@
+{
+  "name": "workflow-dispatch-action",
+  "version": "1.0.0",
+  "description": "GitHub Action to trigger a GitHub Actions workflow in a different repository and wait for completion",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "ncc build index.js -o dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ietf-tools/workflow-dispatch-action.git"
+  },
+  "author": "IETF Tools Team",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/ietf-tools/workflow-dispatch-action/issues"
+  },
+  "homepage": "https://github.com/ietf-tools/workflow-dispatch-action#readme",
+  "dependencies": {
+    "@actions/core": "3.0.1",
+    "@actions/github": "9.1.1",
+    "@js-temporal/polyfill": "0.5.1",
+    "ms": "2.1.3"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "0.38.4",
+    "oxfmt": "0.49.0",
+    "oxlint": "1.64.0"
+  }
+}
