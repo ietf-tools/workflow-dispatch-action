@@ -1,5 +1,5 @@
 name: 'Workflow Dispatch'
-description: 'Trigger a GitHub Actions workflow in a different repos and wait for completion'
+description: 'Trigger a GitHub Actions workflow run in a different repo and wait for its completion'
 author: IETF Tools Team
 inputs:
   repo:

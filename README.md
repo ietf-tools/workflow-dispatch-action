@@ -11,7 +11,7 @@
 
 ---
 
-This GitHub Action triggers a workflow fun in any repository and waits for its completion.
+This GitHub Action triggers a workflow run in any repository and waits for its completion.
 
 - [Inputs](#inputs)
 - [Outputs](#outputs)
