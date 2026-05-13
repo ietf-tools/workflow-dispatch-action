@@ -36,8 +36,8 @@ try {
     headers: {
       'X-GitHub-Api-Version': '2026-03-10'
     }
-  })
-  info(`Workflow dispatched as run ${runRef.workflow_run_id} on ${Temporal.Now.instant().toString()} 🚀`)
+  }).then(r => r.data)
+  info(`Workflow dispatched as run ID ${runRef.workflow_run_id} on ${Temporal.Now.instant().toString()} 🚀`)
   setOutput('workflowRunId', runRef.workflow_run_id)
   setOutput('workflowRunUrl', runRef.html_url)
 
@@ -48,8 +48,9 @@ try {
   // Wait for completion
 
   if (waitForCompletion) {
-    info('Waiting for workflow run completion...')
+    info('Waiting for workflow run completion... ⏳\n')
 
+    const startInstant = Temporal.Now.instant()
     const maxInstant = Temporal.Now.instant().add(Temporal.Duration.from({ milliseconds: waitForCompletionTimeout }))
 
     let keepWaiting = true
@@ -58,7 +59,8 @@ try {
 
       // Query run state
 
-      info('Querying workflow run status...')
+      const diffTime = Temporal.Now.instant().since(startInstant, { smallestUnit: 'second' })
+      info(`Querying workflow run status... (+${diffTime.toLocaleString()})`)
       const runState = await gh.request('GET /repos/{owner}/{repo}/actions/runs/{run_id}', {
         owner,
         repo,
@@ -66,24 +68,27 @@ try {
         headers: {
           'X-GitHub-Api-Version': '2026-03-10'
         }
-      })
-      info(` └── Current state: ${runState.status}`)
+      }).then(r => r.data)
+      info(` └── Current state: ${runState.status}\n`)
 
       // Determine conclusion
 
       if (runState.status === 'completed') {
         keepWaiting = false
-        info(`Workflow run completed with conclusion: ${runState.completion}`)
-        setOutput(workflowRunResult, runState.completion)
+        setOutput('workflowRunResult', runState.conclusion)
 
-        if (runState.completion !== 'success') {
-          setFailed(`Workflow run completed with conclusion: ${runState.completion}`)
+        if (runState.conclusion !== 'success') {
+          info(`Workflow run completed with conclusion: ${runState.conclusion} 🟥`)
+          setFailed(`Workflow run completed with conclusion: ${runState.conclusion}`)
+        } else {
+          info(`Workflow run completed with conclusion: ${runState.conclusion} 🟢`)
         }
+        info(` └── Total duration: ${diffTime.toLocaleString()}`)
       }
 
       // Check if exceeded max wait timeout
 
-      if (keepWaiting && Temporal.Duration.compare(Temporal.Now.instant(), maxInstant) > 0) {
+      if (keepWaiting && Temporal.Instant.compare(Temporal.Now.instant(), maxInstant) > 0) {
         keepWaiting = false
         setOutput('workflowRunResult', 'action_timed_out')
         setFailed('Workflow run has exceeded max wait timeout. It is still running but this action will no longer wait for its completion.')
@@ -93,6 +98,7 @@ try {
     setOutput('workflowRunResult', 'unknown')
   }
 } catch (err) {
+  console.error(err)
   setOutput('workflowRunResult', 'action_error')
   setFailed(err.message)
 }

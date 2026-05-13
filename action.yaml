@@ -30,11 +30,11 @@ inputs:
   waitForCompletionInterval:
     description: 'How often to query the triggered worflow status (e.g. 30s or 1m)'
     required: false
-    default: '30s'
+    default: '10s'
   waitForCompletionTimeout:
     description: 'How long to wait before marking the workflow as timed out (e.g. 10m or 1h)'
     required: false
-    default: '10m'
+    default: '15m'
 outputs:
   workflowRunResult:
     description: 'Result state of the triggered workflow (see readme for possible values)'

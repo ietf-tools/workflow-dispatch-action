@@ -32,8 +32,8 @@ This GitHub Action triggers a workflow run in any repository and waits for its c
 | `inputs` | Inputs to pass to the workflow as a JSON string. All values MUST be strings. (e.g. `{ "inputA": "true" }`) | :x: | `{}` |
 | `showRunUrl` | If set to `true`, the URL to the workflow run will be shown in the output logs. | :x: | `true` |
 | `waitForCompletion` | If set to `true`, the action will wait for the completion of the workflow run and report its completion state. Note that a `failure` (or any state other than `success`) will result in this action failing as well. | :x: | `true` |
-| `waitForCompletionInterval` | How often to query the triggered worflow status (e.g. `30s` or `1m`) | :x: | `30s` |
-| `waitForCompletionTimeout` | How long to wait before marking the workflow as timed out (e.g. `10m` or `1h`) | :x: | `10m` |
+| `waitForCompletionInterval` | How often to query the triggered worflow status (e.g. `30s` or `1m`) | :x: | `10s` |
+| `waitForCompletionTimeout` | How long to wait before marking the workflow as timed out (e.g. `10m` or `1h`) | :x: | `15m` |
 
 ## Outputs
 

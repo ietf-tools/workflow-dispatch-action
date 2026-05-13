@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "GitHub Action to trigger a GitHub Actions workflow in a different repository and wait for completion",
   "main": "dist/index.js",
+  "type": "module",
   "scripts": {
     "build": "ncc build index.js -o dist"
   },
