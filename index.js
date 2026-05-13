@@ -27,12 +27,15 @@ try {
   // Trigger workflow
 
   info('Dispatching workflow...')
-  const runRef = await gh.rest.actions.createWorkflowDispatch({
+  const runRef = await gh.request('POST /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches', {
     owner,
     repo,
     workflow_id: workflow,
     ref,
-    inputs
+    inputs,
+    headers: {
+      'X-GitHub-Api-Version': '2026-03-10'
+    }
   })
   info(`Workflow dispatched as run ${runRef.workflow_run_id} on ${Temporal.Now.instant().toString()} 🚀`)
   setOutput('workflowRunId', runRef.workflow_run_id)
@@ -56,10 +59,13 @@ try {
       // Query run state
 
       info('Querying workflow run status...')
-      const runState = await gh.rest.actions.getWorkflowRun({
+      const runState = await gh.request('GET /repos/{owner}/{repo}/actions/runs/{run_id}', {
         owner,
         repo,
-        run_id: runRef.workflow_run_id
+        run_id: runRef.workflow_run_id,
+        headers: {
+          'X-GitHub-Api-Version': '2026-03-10'
+        }
       })
       info(` └── Current state: ${runState.status}`)
 
