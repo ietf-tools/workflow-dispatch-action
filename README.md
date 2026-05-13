@@ -75,7 +75,7 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v7
+        uses: actions/checkout@v6
 
       - name: Trigger Workflow XYZ
         uses: ietf-tools/workflow-dispatch-action@v1
